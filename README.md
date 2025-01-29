@@ -4,8 +4,8 @@ This repository hosts the code and assets for our Computer Graphics group projec
 
 ## Group Members
 
-Dylan Zemlin (CS 4053)
-Dakota Staubach (CS 4053)
-Daniel Esambu (CS 4053)
-Kenneth Thompson (CS 4053)
-Isabell Cook (CS 5053)
+Dylan Zemlin (CS 4053)  
+Dakota Staubach (CS 4053)  
+Daniel Esambu (CS 4053)  
+Kenneth Thompson (CS 4053)  
+Isabell Cook (CS 5053)  
