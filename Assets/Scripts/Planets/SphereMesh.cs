@@ -22,7 +22,7 @@ public class SphereMesh {
 	// The six initial vertices
 	static readonly Vector3[] baseVertices = { up, left, back, right, forward, down };
 
-	public SphereMesh (int resolution) {
+	public SphereMesh (int resolution, TerrainGeneration.TerrainOptions options) {
 		this.Resolution = resolution;
 		numDivisions = Mathf.Max (0, resolution);
 		numVertsPerFace = ((numDivisions + 3) * (numDivisions + 3) - (numDivisions + 3)) / 2;
@@ -62,14 +62,10 @@ public class SphereMesh {
 		}
 
 		// Using those, apply some basic terrain generation
-		for (int i = 0; i < vertices.nextIndex; i++) {
-			Vector3 vertex = vertices.items[i];
-			float noise = Mathf.PerlinNoise (vertex.x, vertex.y);
-			vertices.items[i] = vertex * (1 + noise * 0.1f);
-		}
+		(Vector3[] verts, int[] tris) = TerrainGeneration.Generate(vertices.items, triangles.items, options);
 
-		Vertices = vertices.items;
-		Triangles = triangles.items;
+		Vertices = verts;
+		Triangles = tris;
 	}
 
 	void CreateFace (Edge sideA, Edge sideB, Edge bottom, bool reverse) {
