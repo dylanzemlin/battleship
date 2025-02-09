@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "CS4053-Battleship.sln"
+    "dotnet.defaultSolution": "battleship.sln"
 }
