@@ -110,10 +110,10 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _Foam_Amount: 0.86
-    - _Foam_Cutoff: 1.8
-    - _Foam_Scale: 45.8
-    - _Foam_Speed: 0.1
+    - _Foam_Amount: 0.71
+    - _Foam_Cutoff: 3.89
+    - _Foam_Scale: 43.43
+    - _Foam_Speed: 0.04
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -140,12 +140,12 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Deep_Color: {r: 0.011764707, g: 0.28235292, b: 0.5019608, a: 0.8156863}
+    - _Deep_Color: {r: 0.011764707, g: 0.28235286, b: 0.5019608, a: 0.6862745}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Foam_Color: {r: 1, g: 1, b: 1, a: 0.7411765}
+    - _Foam_Color: {r: 0.8443396, g: 0.967496, b: 1, a: 0.77254903}
     - _Refraction_Scale: {r: 25, g: 25, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Surface_Color: {r: 0.12156858, g: 0.35597906, b: 0.45098037, a: 0.7529412}
+    - _Surface_Color: {r: 0.12156855, g: 0.35597903, b: 0.45098037, a: 0.7607843}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &1359813243029878226

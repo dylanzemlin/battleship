@@ -1,0 +1,74 @@
+using UnityEngine;
+
+public class PlanetCameraController : MonoBehaviour
+{
+    public GameObject planet; // Assign the planet GameObject in the inspector
+    public float zoomSpeed = 10f;
+    public float moveSpeed = 5f;
+    public float rotationSpeed = 50f;
+    
+    private float planetRadius;
+    private float minZoom;
+    private float maxZoom;
+    private float currentZoom;
+    private Vector3 cameraOffset;
+
+    void Start()
+    {
+        if (planet == null)
+        {
+            Debug.LogError("Planet is not assigned!");
+            return;
+        }
+
+        SphereCollider planetCollider = planet.GetComponent<SphereCollider>();
+        if (planetCollider != null)
+        {
+            planetRadius = planetCollider.radius * planet.transform.localScale.x;
+        }
+        else
+        {
+            planetRadius = 10f; // Default value if no collider is found
+            Debug.LogWarning("No SphereCollider found on the planet. Using default radius.");
+        }
+
+        minZoom = planetRadius * 1.2f;
+        maxZoom = planetRadius * 5f;
+        currentZoom = (minZoom + maxZoom) / 2;
+        cameraOffset = new Vector3(0, currentZoom, 0);
+        transform.position = planet.transform.position + cameraOffset;
+        transform.LookAt(planet.transform.position);
+    }
+
+    void Update()
+    {
+        if (planet == null) return;
+
+        HandleZoom();
+        HandleMovement();
+    }
+
+    void HandleZoom()
+    {
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        currentZoom -= scrollInput * zoomSpeed;
+        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+
+        transform.position = planet.transform.position + cameraOffset.normalized * currentZoom;
+    }
+
+    void HandleMovement()
+    {
+        float horizontal = -Input.GetAxis("Horizontal"); // A/D or Left/Right
+        float vertical = -Input.GetAxis("Vertical"); // W/S or Up/Down
+
+        Vector3 right = transform.right;
+        Vector3 forward = Vector3.Cross(right, transform.position - planet.transform.position).normalized;
+        
+        Vector3 movement = (right * horizontal + forward * vertical) * moveSpeed * Time.deltaTime;
+        cameraOffset = Quaternion.AngleAxis(movement.magnitude * Mathf.Rad2Deg / planetRadius, Vector3.Cross(movement, transform.position - planet.transform.position)) * cameraOffset;
+
+        transform.position = planet.transform.position + cameraOffset.normalized * currentZoom;
+        transform.LookAt(planet.transform.position);
+    }
+}

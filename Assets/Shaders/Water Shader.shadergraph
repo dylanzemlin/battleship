@@ -2075,8 +2075,8 @@
     "m_ObjectId": "1f457666be2949999bdfbe9aa5c151b2",
     "m_Title": "Foam",
     "m_Position": {
-        "x": -3311.333251953125,
-        "y": 558.666748046875
+        "x": -3311.0,
+        "y": 558.0
     }
 }
 
@@ -3958,7 +3958,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Scale",
     "m_StageCapability": 3,
-    "m_Value": 1.0,
+    "m_Value": 0.5,
     "m_DefaultValue": 10.0,
     "m_Labels": []
 }
@@ -4371,7 +4371,7 @@
     "m_Title": "Refraction",
     "m_Position": {
         "x": -4038.0,
-        "y": -962.6666259765625
+        "y": -963.0
     }
 }
 
@@ -6060,8 +6060,8 @@
     "m_ObjectId": "a4bd339d37a84778a5438bd0f9411a8a",
     "m_Title": "Water Color",
     "m_Position": {
-        "x": -4109.33349609375,
-        "y": -5.333251953125
+        "x": -4109.0,
+        "y": -6.0
     }
 }
 
@@ -7107,7 +7107,7 @@
     "m_Title": "Normals",
     "m_Position": {
         "x": -2698.0,
-        "y": -54.66650390625
+        "y": -55.0
     }
 }
 
@@ -7551,8 +7551,8 @@
     "m_ObjectId": "d6156bb14bde4528ab67f25149a0589b",
     "m_Title": "Waves",
     "m_Position": {
-        "x": -4102.66650390625,
-        "y": -2322.666748046875
+        "x": -4102.0,
+        "y": -2323.0
     }
 }
 
@@ -7955,7 +7955,7 @@
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
-    "m_RenderFace": 2,
+    "m_RenderFace": 0,
     "m_AlphaClip": false,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
