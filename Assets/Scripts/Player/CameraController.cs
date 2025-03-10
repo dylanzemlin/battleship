@@ -21,20 +21,10 @@ public class PlanetCameraController : MonoBehaviour
             return;
         }
 
-        SphereCollider planetCollider = planet.GetComponent<SphereCollider>();
-        if (planetCollider != null)
-        {
-            planetRadius = planetCollider.radius * planet.transform.localScale.x;
-        }
-        else
-        {
-            planetRadius = 10f; // Default value if no collider is found
-            Debug.LogWarning("No SphereCollider found on the planet. Using default radius.");
-        }
-
+        planetRadius = planet.GetComponent<Planet>().radius;
         minZoom = planetRadius * 1.2f;
-        maxZoom = planetRadius * 5f;
-        currentZoom = (minZoom + maxZoom) / 2;
+        maxZoom = planetRadius * 3f;
+        currentZoom = minZoom + (maxZoom - minZoom) / 6f;
         cameraOffset = new Vector3(0, currentZoom, 0);
         transform.position = planet.transform.position + cameraOffset;
         transform.LookAt(planet.transform.position);
@@ -61,6 +51,13 @@ public class PlanetCameraController : MonoBehaviour
     {
         float horizontal = -Input.GetAxis("Horizontal"); // A/D or Left/Right
         float vertical = -Input.GetAxis("Vertical"); // W/S or Up/Down
+
+        bool isShiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        if (isShiftPressed)
+        {
+            horizontal *= 2;
+            vertical *= 2;
+        }
 
         Vector3 right = transform.right;
         Vector3 forward = Vector3.Cross(right, transform.position - planet.transform.position).normalized;

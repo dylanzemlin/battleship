@@ -24,14 +24,39 @@ public class Planet : MonoBehaviour
     public void Regenerate()
     {
         SphereMesh sphereMesh = new(resolution, terrainOptions);
+
+        // Calculate the minimum/maximum height of the planet from the vertices
+        float minHeight = float.MaxValue;
+        float maxHeight = float.MinValue;
+        foreach (Vector3 vertex in sphereMesh.Vertices)
+        {
+            float height = vertex.magnitude;
+            if (height < minHeight)
+            {
+                minHeight = height;
+            }
+            if (height > maxHeight)
+            {
+                maxHeight = height;
+            }
+        }
+
+        Color[] colors = new Color[sphereMesh.Vertices.Length];
+        for (int i = 0; i < sphereMesh.Vertices.Length; i++)
+        {
+            float height = sphereMesh.Vertices[i].magnitude;
+            float t = Mathf.InverseLerp(minHeight, maxHeight, height);
+            colors[i] = terrainOptions.terrainGradient.Evaluate(t);
+        }
+
         Mesh mesh = new()
         {
             vertices = sphereMesh.Vertices,
-            triangles = sphereMesh.Triangles
+            triangles = sphereMesh.Triangles,
+            colors = colors
         };
         mesh.RecalculateNormals();
         _filter.mesh = mesh;
-
         transform.localScale = Vector3.one * radius;
     }
 

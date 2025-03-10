@@ -16,6 +16,12 @@ public class TerrainGeneration
             float noise = Mathf.PerlinNoise(vertex.x * options.noiseScale + options.noiseOffset, vertex.z * options.noiseScale + options.noiseOffset);
             float height = noise * options.noiseStrength * options.heightScale;
             vertices[i] = vertex.normalized * (1 + height);
+
+            // If the vertex is below the ocean floor, set it to the ocean floor height
+            if (vertices[i].magnitude < options.oceanFloorHeight)
+            {
+                vertices[i] = vertices[i].normalized * options.oceanFloorHeight;
+            }
         }
 
         return (vertices.ToArray(), triangles.ToArray());
@@ -28,5 +34,9 @@ public class TerrainGeneration
         public float noiseScale;
         public float noiseStrength;
         public float noiseOffset;
+
+        [Range(0, 1)]
+        public float oceanFloorHeight;
+        public Gradient terrainGradient;
     }
 }
