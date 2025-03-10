@@ -20,8 +20,12 @@ public class Water : MonoBehaviour
 
     public void Regenerate()
     {
-        SphereGenerator gen = new CubeSphereGenerator(radius, resolution);
-        Mesh mesh = gen.Generate();
+        SphereMesh sphereMesh = new(resolution, new TerrainGeneration.TerrainOptions());
+        Mesh mesh = new()
+        {
+            vertices = sphereMesh.Vertices,
+            triangles = sphereMesh.Triangles,
+        };
 
         // Generate sphere uvs
         Vector3[] vertices = mesh.vertices;
@@ -35,6 +39,7 @@ public class Water : MonoBehaviour
         mesh.RecalculateNormals();
 
         _filter.mesh = mesh;
+        transform.localScale = Vector3.one * radius;
     }
 
     private void Update() {
