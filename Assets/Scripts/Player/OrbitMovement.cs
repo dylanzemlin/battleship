@@ -14,43 +14,60 @@
 
 using UnityEngine;
 
-public class OrbitMovement : MonoBehaviour{
+public class CameraMovement : MonoBehaviour{
     public Transform target; // Orbit around target
     public float speed = 50f; // speed of movement
 
-    void Update()
-    {
+    private Vector3 initialiOffset = new Vector3(0, 3200, -1000); // Hardcoded default placement. 
+    private Vector3 offset = new Vector3(0, 0, 0);
+
+    void Start() {
+        Renderer renderer = target.GetComponent<Renderer>();
+        if (renderer != null) {
+            float x_size = renderer.bounds.size.x;
+            float y_size = renderer.bounds.size.y;
+            float z_size = renderer.bounds.size.z;
+            Debug.Log(x_size + " " + y_size + " " + z_size);
+            initialiOffset = new Vector3(target.position.x, target.position.y + (0.4f*y_size), -(target.position.z + x_size));
+        }
+        transform.position = initialiOffset;        
+    }
+
+    void Update() {
         // get distance from target
         Vector3 direction = (target.position - transform.position).normalized;
-        Vector3 offset = new Vector3(0,0,0);
         
         if (Input.GetKey (KeyCode.LeftShift)){ // Move in strict coordinates
             Vector3 v = planeMovement();
-            transform.Translate(v * Time.deltaTime * speed);
+            if (v != Vector3.zero) {
+                transform.Translate(v * Time.deltaTime * speed);
+            }
         } else { // Move in orbital coordinates
             Vector3 v = Orbit();
-            transform.RotateAround(target.position, v, speed * Time.deltaTime);
+            if (v != Vector3.zero) {
+                transform.RotateAround(target.position, v, speed * Time.deltaTime);
+            }
         }
     }
 
     private Vector3 planeMovement() { //returns the basic values, if it's 0 than it's not active.
         Vector3 p_Velocity = new Vector3();
-        if (Input.GetKey (KeyCode.W)){
+        if (Input.GetKey(KeyCode.W)){
             p_Velocity += new Vector3(0, 1, 0);
         }
-        if (Input.GetKey (KeyCode.S)){
+        if (Input.GetKey(KeyCode.S)){
             p_Velocity += new Vector3(0, -1, 0);
         }
-        if (Input.GetKey (KeyCode.A)){
+        if (Input.GetKey(KeyCode.A)){
             p_Velocity += new Vector3(-1, 0, 0);
         }
-        if (Input.GetKey (KeyCode.D)){
+        if (Input.GetKey(KeyCode.D)){
             p_Velocity += new Vector3(1, 0, 0);
         }
-        if (Input.GetKey (KeyCode.Q)){
+        if (Input.GetKey(KeyCode.Q)){
             p_Velocity += new Vector3(0, 0, 1);
         }
-        if (Input.GetKey (KeyCode.Z)){
+        if (Input.GetKey(KeyCode.Z)){
             p_Velocity += new Vector3(0, 0, -1);
         }
         return p_Velocity;
@@ -58,16 +75,16 @@ public class OrbitMovement : MonoBehaviour{
 
     private Vector3 Orbit() { //returns the basic values, if it's 0 than it's not active.
         Vector3 p_Velocity = new Vector3();
-        if (Input.GetKey (KeyCode.A)){ // W
+        if (Input.GetKey(KeyCode.A)){ // W
             p_Velocity += transform.up;
         }
-        if (Input.GetKey (KeyCode.D)){ // S
+        if (Input.GetKey(KeyCode.D)){ // S
             p_Velocity += -transform.up;
         }
-        if (Input.GetKey (KeyCode.S)){ // A
+        if (Input.GetKey(KeyCode.S)){ // A
             p_Velocity += -transform.right;
         }
-        if (Input.GetKey (KeyCode.W)){ // D
+        if (Input.GetKey(KeyCode.W)){ // D
             p_Velocity += transform.right;
         }
         return p_Velocity.normalized;
