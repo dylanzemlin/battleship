@@ -17,8 +17,12 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour{
     public Transform target; // Orbit around target
     public float speed = 50f; // speed of movement
+    public float zoomSpeed = 500f; // Speed of zoom
+    public float minZoom = 500f; // Minimum zoom distance
+    public float maxZoom = 5000f; // Maximum zoom distance
+    public float rotationSpeed = 200f; // Speed of right-click rotation
 
-    private Vector3 initialiOffset = new Vector3(0, 3200, -1000); // Hardcoded default placement. 
+    private Vector3 initialiOffset = new Vector3(0, 3200, -1000); // Hardcoded default placement.
     private Vector3 offset = new Vector3(0, 0, 0);
 
     void Start() {
@@ -37,6 +41,10 @@ public class CameraMovement : MonoBehaviour{
         // get distance from target
         Vector3 direction = (target.position - transform.position).normalized;
         
+        if (Input.GetMouseButton(1)) {
+            RightClickRotate();
+        }
+
         if (Input.GetKey (KeyCode.LeftShift)){ // Move in strict coordinates
             Vector3 v = planeMovement();
             if (v != Vector3.zero) {
@@ -48,6 +56,8 @@ public class CameraMovement : MonoBehaviour{
                 transform.RotateAround(target.position, v, speed * Time.deltaTime);
             }
         }
+
+        Zoom();
     }
 
     private Vector3 planeMovement() { //returns the basic values, if it's 0 than it's not active.
@@ -90,4 +100,24 @@ public class CameraMovement : MonoBehaviour{
         return p_Velocity.normalized;
     }
 
+    private void Zoom() {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0) {
+            Vector3 direction = (transform.position - target.position).normalized;
+            float distance = Vector3.Distance(transform.position, target.position);
+            float newDistance = Mathf.Clamp(distance - scroll * zoomSpeed, minZoom, maxZoom);
+            transform.position = target.position + direction * newDistance;
+        }
+    }
+
+    private void RightClickRotate() {
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+
+        Vector3 axis = (target.position - transform.position).normalized;
+        transform.RotateAround(target.position, axis, mouseX);
+
+        Vector3 right = transform.right;
+        transform.RotateAround(transform.position, right, -mouseY);
+    }
 }

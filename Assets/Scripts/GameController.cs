@@ -19,8 +19,21 @@ public class GameController : MonoSingleton<GameController>
         // If the index is -1, deselect the currently selected ship
         if (index == -1)
         {
-            selectedShip = null;
+            if (selectedShip != null)
+            {
+                Destroy(ghostShip);
+                ghostShip = null;
+                selectedShip = null;
+            }
             return;
+        }
+
+        // If there is already a selected ship, destroy it
+        if (selectedShip != null)
+        {
+            Destroy(ghostShip);
+            ghostShip = null;
+            selectedShip = null;
         }
 
         // If the index is within the bounds of the ships array, set the selected ship
@@ -61,21 +74,20 @@ public class GameController : MonoSingleton<GameController>
             // Rotate the ghost ship to face the planet
             Vector3 waterNormal = hit.normal;
             ghostShip.transform.up = waterNormal;
-        }
 
-        // Check for Q/E to rotate the ghost ship horizontally by some small amount
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ghostShip.transform.Rotate(Vector3.left, 5f);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            ghostShip.transform.Rotate(Vector3.up, 5f);
+            // Push the ship into the water a bit
+            ghostShip.transform.position -= waterNormal * 1.3f;
         }
 
         // Check for mouse button input to place the ship
         if (Input.GetMouseButtonDown(0))
         {
+            // Ensure they are clicking on the water
+            if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("Water"))
+            {
+                return;
+            }
+
             // Instantiate the selected ship at the ghost ship's position and rotation
             GameObject newShip = Instantiate(selectedShip, ghostShip.transform.position, ghostShip.transform.rotation);
             shipInstances.Add(newShip);
