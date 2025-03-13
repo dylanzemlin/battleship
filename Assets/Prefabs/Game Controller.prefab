@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7032686859967575044}
   - component: {fileID: 5757898015058037769}
   - component: {fileID: 6430559624883874911}
+  - component: {fileID: 2557583126303764216}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -64,3 +65,18 @@ MonoBehaviour:
   fbxPrefab: {fileID: 919132149155446097, guid: c70635ece37f6f045931a490ad92ade5, type: 3}
   speed: 1
   radius: 5
+--- !u!114 &2557583126303764216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2286994958727460309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9743e68bce424ee45a74aa09427265f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  fbxPrefab: {fileID: 919132149155446097, guid: 254b96305f82ea14e961647c80badd6c, type: 3}
+  speed: 10

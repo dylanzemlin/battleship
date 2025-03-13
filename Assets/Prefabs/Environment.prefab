@@ -43,14 +43,14 @@ GameObject:
   - component: {fileID: 2620532033102509427}
   - component: {fileID: 1174343209880410193}
   - component: {fileID: 2754496545040185690}
-  - component: {fileID: 8557613348621884505}
+  - component: {fileID: 4698482173644243932}
   m_Layer: 4
   m_Name: Water (Unity Sphere)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2620532033102509427
 Transform:
   m_ObjectHideFlags: 0
@@ -119,8 +119,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8557613348621884505
-SphereCollider:
+--- !u!64 &4698482173644243932
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -137,9 +137,10 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &6192824180696329182
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +153,7 @@ GameObject:
   - component: {fileID: 4151051576587106268}
   - component: {fileID: 7113549608954329885}
   - component: {fileID: 9211330058548419987}
-  - component: {fileID: 5840184928530405264}
+  - component: {fileID: 7187372416788460632}
   m_Layer: 6
   m_Name: Planet
   m_TagString: Untagged
@@ -249,7 +250,7 @@ MonoBehaviour:
     noiseScale: 3.1
     noiseStrength: 0.03
     noiseOffset: -3.75
-    oceanFloorHeight: 0.902
+    oceanFloorHeight: 0.859
     terrainGradient:
       serializedVersion: 2
       key0: {r: 0, g: 0, b: 0, a: 1}
@@ -280,8 +281,8 @@ MonoBehaviour:
       m_ColorSpace: 0
       m_NumColorKeys: 5
       m_NumAlphaKeys: 2
---- !u!135 &5840184928530405264
-SphereCollider:
+--- !u!64 &7187372416788460632
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -298,9 +299,10 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &8101921328497674811
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,13 +315,14 @@ GameObject:
   - component: {fileID: 3804477126304801146}
   - component: {fileID: 4951705046631157416}
   - component: {fileID: 7301070685374907450}
+  - component: {fileID: 3184648897011288596}
   m_Layer: 6
   m_Name: Water (Custom Sphere)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6873019782176300530
 Transform:
   m_ObjectHideFlags: 0
@@ -402,3 +405,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0.92
   resolution: 24
+--- !u!64 &3184648897011288596
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8101921328497674811}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
