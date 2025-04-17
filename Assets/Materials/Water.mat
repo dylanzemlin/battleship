@@ -73,7 +73,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Refractional_Normal_B:
-        m_Texture: {fileID: 2800000, guid: c2db29dc69055064b81832b69ccb896e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5ffcfddcaa576b14ca09f87bb07322d9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -110,7 +110,7 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _Foam_Amount: 0.71
+    - _Foam_Amount: 1.01
     - _Foam_Cutoff: 3.89
     - _Foam_Scale: 43.43
     - _Foam_Speed: 0.04
