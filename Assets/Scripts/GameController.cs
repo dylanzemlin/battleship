@@ -8,10 +8,14 @@ public class GameController : MonoSingleton<GameController>
 
     // The currently selected ship. Can be null if no ship is selected.
     public GameObject selectedShip;
-    public ParticleSystem waterSplash;
 
     // The ghost ship that follows the mouse cursor when a ship is selected.
     private GameObject ghostShip;
+
+    // Particle Systems
+    public ParticleSystem waterSplash;
+    
+    public ParticleSystemController explosionController;
 
     private List<GameObject> shipInstances = new();
 

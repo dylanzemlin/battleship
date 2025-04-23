@@ -17,6 +17,21 @@ public class Cannon : BaseWeapon
 
         scrpt.planetCenter = GameObject.Find("Planet").transform; // Assuming the planet is named "Planet"
         scrpt.Fire(barrel.transform.forward, 50f);
+
+        // 
+        ParticleSystemController system = GameController.Instance.explosionController;
+        if (system == null)
+        {
+            Debug.LogError("ParticleSystemController not found in GameController.");
+            return;
+        }
+
+        // Create a new transform with +3 z
+        Vector3 newPos = barrel.transform.position + barrel.transform.forward * 3f;
+        system.Move(newPos);
+        system.Rotate(barrel.transform.rotation);
+        system.Stop();
+        system.Play();
     }
 
     private void Update()
