@@ -8,35 +8,76 @@ public class TerrainGeneration
         List<Vector3> vertices = new(verts);
         List<int> triangles = new(tris);
 
-        // Adjust vertex heights using Perlin noise
         for (int i = 0; i < vertices.Count; i++)
         {
-			Vector3 vertex = vertices[i];
+            Vector3 vertex = vertices[i].normalized;
 
-            float noise = Mathf.PerlinNoise(vertex.x * options.noiseScale + options.noiseOffset, vertex.z * options.noiseScale + options.noiseOffset);
-            float height = noise * options.noiseStrength * options.heightScale;
-            vertices[i] = vertex.normalized * (1 + height);
+            // Apply fractal noise (multiple layers of Perlin noise)
+            float elevation = GenerateFractalNoise(vertex, options);
 
-            // If the vertex is below the ocean floor, set it to the ocean floor height
-            if (vertices[i].magnitude < options.oceanFloorHeight)
+            // Calculate final vertex position
+            float height = elevation * options.heightScale;
+            vertex *= (1 + height);
+
+            // Clamp to ocean floor if needed
+            if (vertex.magnitude < options.oceanFloorHeight)
             {
-                vertices[i] = vertices[i].normalized * options.oceanFloorHeight;
+                vertex = vertex.normalized * options.oceanFloorHeight;
             }
+
+            vertices[i] = vertex;
         }
 
         return (vertices.ToArray(), triangles.ToArray());
+    }
+
+    private static float GenerateFractalNoise(Vector3 point, TerrainOptions options)
+    {
+        float total = 0f;
+        float frequency = options.baseFrequency;
+        float amplitude = 1f;
+        float maxValue = 0f;
+
+        for (int i = 0; i < options.octaves; i++)
+        {
+            float noise = Mathf.PerlinNoise(
+                point.x * frequency + options.noiseOffset,
+                point.z * frequency + options.noiseOffset
+            );
+
+            total += noise * amplitude;
+            maxValue += amplitude;
+
+            amplitude *= options.persistence;
+            frequency *= options.lacunarity;
+        }
+
+        float elevation = total / maxValue;
+
+        // Optional tweak to emphasize continents (threshold)
+        elevation = Mathf.Clamp01(elevation - options.continentThreshold);
+
+        return elevation;
     }
 
     [System.Serializable]
     public struct TerrainOptions
     {
         public float heightScale;
-        public float noiseScale;
-        public float noiseStrength;
+
+        [Header("Fractal Noise")]
+        public int octaves;
+        public float baseFrequency;
+        public float lacunarity;    // frequency multiplier per octave
+        public float persistence;   // amplitude reduction per octave
         public float noiseOffset;
+
+        [Header("Continent Tweaking")]
+        public float continentThreshold; // Elevation below this is ocean
 
         [Range(0, 1)]
         public float oceanFloorHeight;
+
         public Gradient terrainGradient;
     }
 }

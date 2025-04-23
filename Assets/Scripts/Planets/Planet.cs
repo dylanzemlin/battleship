@@ -21,6 +21,36 @@ public class Planet : MonoBehaviour
         Regenerate();
     }
 
+    public static Vector3[] CalculateNormals(Vector3[] vertices, int[] triangles)
+    {
+        Vector3[] normals = new Vector3[vertices.Length];
+        int triangleCount = triangles.Length / 3;
+
+        for (int i = 0; i < triangleCount; i++)
+        {
+            int index0 = triangles[i * 3 + 0];
+            int index1 = triangles[i * 3 + 1];
+            int index2 = triangles[i * 3 + 2];
+
+            Vector3 v0 = vertices[index0];
+            Vector3 v1 = vertices[index1];
+            Vector3 v2 = vertices[index2];
+
+            Vector3 normal = Vector3.Cross(v1 - v0, v2 - v0).normalized;
+
+            normals[index0] += normal;
+            normals[index1] += normal;
+            normals[index2] += normal;
+        }
+
+        for (int i = 0; i < normals.Length; i++)
+        {
+            normals[i] = normals[i].normalized;
+        }
+
+        return normals;
+    }
+
     public void Regenerate()
     {
         SphereMesh sphereMesh = new(resolution, terrainOptions);
@@ -53,7 +83,8 @@ public class Planet : MonoBehaviour
         {
             vertices = sphereMesh.Vertices,
             triangles = sphereMesh.Triangles,
-            colors = colors
+            colors = colors,
+            normals = CalculateNormals(sphereMesh.Vertices, sphereMesh.Triangles)
         };
         mesh.RecalculateNormals();
         _filter.mesh = mesh;

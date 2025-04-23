@@ -3,7 +3,8 @@ using UnityEngine;
 using static UnityEngine.Vector3;
 
 // Huge thanks to https://www.youtube.com/watch?v=lctXaT9pxA0 :)
-public class SphereMesh {
+public class SphereMesh
+{
 
 	public readonly Vector3[] Vertices;
 	public readonly int[] Triangles;
@@ -22,21 +23,23 @@ public class SphereMesh {
 	// The six initial vertices
 	static readonly Vector3[] baseVertices = { up, left, back, right, forward, down };
 
-	public SphereMesh (int resolution, TerrainGeneration.TerrainOptions options) {
+	public SphereMesh(int resolution, TerrainGeneration.TerrainOptions options)
+	{
 		this.Resolution = resolution;
-		numDivisions = Mathf.Max (0, resolution);
+		numDivisions = Mathf.Max(0, resolution);
 		numVertsPerFace = ((numDivisions + 3) * (numDivisions + 3) - (numDivisions + 3)) / 2;
 		int numVerts = numVertsPerFace * 8 - (numDivisions + 2) * 12 + 6;
 		int numTrisPerFace = (numDivisions + 1) * (numDivisions + 1);
 
-		vertices = new FixedSizeList<Vector3> (numVerts);
-		triangles = new FixedSizeList<int> (numTrisPerFace * 8 * 3);
+		vertices = new FixedSizeList<Vector3>(numVerts);
+		triangles = new FixedSizeList<int>(numTrisPerFace * 8 * 3);
 
-		vertices.AddRange (baseVertices);
+		vertices.AddRange(baseVertices);
 
 		// Create 12 edges, with n vertices added along them (n = numDivisions)
 		Edge[] edges = new Edge[12];
-		for (int i = 0; i < vertexPairs.Length; i += 2) {
+		for (int i = 0; i < vertexPairs.Length; i += 2)
+		{
 			Vector3 startVertex = vertices.items[vertexPairs[i]];
 			Vector3 endVertex = vertices.items[vertexPairs[i + 1]];
 
@@ -44,21 +47,23 @@ public class SphereMesh {
 			edgeVertexIndices[0] = vertexPairs[i];
 
 			// Add vertices along edge
-			for (int divisionIndex = 0; divisionIndex < numDivisions; divisionIndex++) {
+			for (int divisionIndex = 0; divisionIndex < numDivisions; divisionIndex++)
+			{
 				float t = (divisionIndex + 1f) / (numDivisions + 1f);
 				edgeVertexIndices[divisionIndex + 1] = vertices.nextIndex;
-				vertices.Add (Slerp (startVertex, endVertex, t));
+				vertices.Add(Slerp(startVertex, endVertex, t));
 			}
 			edgeVertexIndices[numDivisions + 1] = vertexPairs[i + 1];
 			int edgeIndex = i / 2;
-			edges[edgeIndex] = new Edge (edgeVertexIndices);
+			edges[edgeIndex] = new Edge(edgeVertexIndices);
 		}
 
 		// Create faces
-		for (int i = 0; i < edgeTriplets.Length; i += 3) {
+		for (int i = 0; i < edgeTriplets.Length; i += 3)
+		{
 			int faceIndex = i / 3;
 			bool reverse = faceIndex >= 4;
-			CreateFace (edges[edgeTriplets[i]], edges[edgeTriplets[i + 1]], edges[edgeTriplets[i + 2]], reverse);
+			CreateFace(edges[edgeTriplets[i]], edges[edgeTriplets[i + 1]], edges[edgeTriplets[i + 2]], reverse);
 		}
 
 		// Using those, apply some basic terrain generation
@@ -68,61 +73,91 @@ public class SphereMesh {
 		Triangles = tris;
 	}
 
-	void CreateFace (Edge sideA, Edge sideB, Edge bottom, bool reverse) {
-		int numPointsInEdge = sideA.vertexIndices.Length;
-		var vertexMap = new FixedSizeList<int> (numVertsPerFace);
-		vertexMap.Add (sideA.vertexIndices[0]); // top of triangle
+	public static (Vector3[] uniqueVerts, int[] newTris) DeduplicateVertices(Vector3[] verts, int[] tris, float epsilon = 1e-6f)
+	{
+		Dictionary<Vector3, int> vertMap = new Dictionary<Vector3, int>(new Vector3Comparer(epsilon));
+		List<Vector3> uniqueVerts = new List<Vector3>();
+		int[] newTris = new int[tris.Length];
 
-		for (int i = 1; i < numPointsInEdge - 1; i++) {
+		for (int i = 0; i < tris.Length; i++)
+		{
+			Vector3 v = verts[tris[i]];
+			if (!vertMap.TryGetValue(v, out int index))
+			{
+				index = uniqueVerts.Count;
+				uniqueVerts.Add(v);
+				vertMap[v] = index;
+			}
+			newTris[i] = index;
+		}
+
+		return (uniqueVerts.ToArray(), newTris);
+	}
+
+	void CreateFace(Edge sideA, Edge sideB, Edge bottom, bool reverse)
+	{
+		int numPointsInEdge = sideA.vertexIndices.Length;
+		var vertexMap = new FixedSizeList<int>(numVertsPerFace);
+		vertexMap.Add(sideA.vertexIndices[0]); // top of triangle
+
+		for (int i = 1; i < numPointsInEdge - 1; i++)
+		{
 			// Side A vertex
-			vertexMap.Add (sideA.vertexIndices[i]);
+			vertexMap.Add(sideA.vertexIndices[i]);
 
 			// Add vertices between sideA and sideB
 			Vector3 sideAVertex = vertices.items[sideA.vertexIndices[i]];
 			Vector3 sideBVertex = vertices.items[sideB.vertexIndices[i]];
 			int numInnerPoints = i - 1;
-			for (int j = 0; j < numInnerPoints; j++) {
+			for (int j = 0; j < numInnerPoints; j++)
+			{
 				float t = (j + 1f) / (numInnerPoints + 1f);
-				vertexMap.Add (vertices.nextIndex);
-				vertices.Add (Slerp (sideAVertex, sideBVertex, t));
+				vertexMap.Add(vertices.nextIndex);
+				vertices.Add(Slerp(sideAVertex, sideBVertex, t));
 			}
 
 			// Side B vertex
-			vertexMap.Add (sideB.vertexIndices[i]);
+			vertexMap.Add(sideB.vertexIndices[i]);
 		}
 
 		// Add bottom edge vertices
-		for (int i = 0; i < numPointsInEdge; i++) {
-			vertexMap.Add (bottom.vertexIndices[i]);
+		for (int i = 0; i < numPointsInEdge; i++)
+		{
+			vertexMap.Add(bottom.vertexIndices[i]);
 		}
 
 		// Triangulate
 		int numRows = numDivisions + 1;
-		for (int row = 0; row < numRows; row++) {
+		for (int row = 0; row < numRows; row++)
+		{
 			// vertices down left edge follow quadratic sequence: 0, 1, 3, 6, 10, 15...
 			// the nth term can be calculated with: (n^2 - n)/2
 			int topVertex = ((row + 1) * (row + 1) - row - 1) / 2;
 			int bottomVertex = ((row + 2) * (row + 2) - row - 2) / 2;
 
 			int numTrianglesInRow = 1 + 2 * row;
-			for (int column = 0; column < numTrianglesInRow; column++) {
+			for (int column = 0; column < numTrianglesInRow; column++)
+			{
 				int v0, v1, v2;
 
-				if (column % 2 == 0) {
+				if (column % 2 == 0)
+				{
 					v0 = topVertex;
 					v1 = bottomVertex + 1;
 					v2 = bottomVertex;
 					topVertex++;
 					bottomVertex++;
-				} else {
+				}
+				else
+				{
 					v0 = topVertex;
 					v1 = bottomVertex;
 					v2 = topVertex - 1;
 				}
 
-				triangles.Add (vertexMap.items[v0]);
-				triangles.Add (vertexMap.items[(reverse) ? v2 : v1]);
-				triangles.Add (vertexMap.items[(reverse) ? v1 : v2]);
+				triangles.Add(vertexMap.items[v0]);
+				triangles.Add(vertexMap.items[(reverse) ? v2 : v1]);
+				triangles.Add(vertexMap.items[(reverse) ? v1 : v2]);
 			}
 		}
 
@@ -130,31 +165,61 @@ public class SphereMesh {
 
 	// Convenience classes:
 
-	public class Edge {
+	public class Edge
+	{
 		public int[] vertexIndices;
 
-		public Edge (int[] vertexIndices) {
+		public Edge(int[] vertexIndices)
+		{
 			this.vertexIndices = vertexIndices;
 		}
 	}
 
-	public class FixedSizeList<T> {
+	public class FixedSizeList<T>
+	{
 		public T[] items;
 		public int nextIndex;
 
-		public FixedSizeList (int size) {
+		public FixedSizeList(int size)
+		{
 			items = new T[size];
 		}
 
-		public void Add (T item) {
+		public void Add(T item)
+		{
 			items[nextIndex] = item;
 			nextIndex++;
 		}
 
-		public void AddRange (IEnumerable<T> items) {
-			foreach (var item in items) {
-				Add (item);
+		public void AddRange(IEnumerable<T> items)
+		{
+			foreach (var item in items)
+			{
+				Add(item);
 			}
+		}
+	}
+
+	class Vector3Comparer : IEqualityComparer<Vector3>
+	{
+		private readonly float epsilon;
+
+		public Vector3Comparer(float epsilon)
+		{
+			this.epsilon = epsilon;
+		}
+
+		public bool Equals(Vector3 a, Vector3 b)
+		{
+			return (a - b).sqrMagnitude < epsilon * epsilon;
+		}
+
+		public int GetHashCode(Vector3 obj)
+		{
+			// Rough hash ignoring floating point precision issues
+			return Mathf.RoundToInt(obj.x / epsilon) * 73856093 ^
+				   Mathf.RoundToInt(obj.y / epsilon) * 19349663 ^
+				   Mathf.RoundToInt(obj.z / epsilon) * 83492791;
 		}
 	}
 

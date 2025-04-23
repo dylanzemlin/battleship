@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class BaseWeapon : MonoBehaviour {
     public GameObject ammoPrefab;
+    public GameObject barrel;
 
     public virtual void Fire() {
         Debug.LogWarning("BaseWeapon.Fire() called");
