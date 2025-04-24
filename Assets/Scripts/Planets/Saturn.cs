@@ -9,9 +9,9 @@ public class Saturn : MonoBehaviour
    private GameObject saturn;
 
     public float speed = 10f;
-    public Vector3 rotationSphere = new Vector3(1,1,1);
+    public Vector3 rotationSphere = new Vector3(-1,0,0);
     public float rotationSphere_speed = 1f;
-    public Vector3 rotationTorus = new Vector3(1,1,1);
+    public Vector3 rotationTorus = new Vector3(0,0,1);
     public float rotationTorus_speed = 1f;
     private float radius;
     
