@@ -1,50 +1,63 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class KeyboardCanonAiming : MonoBehaviour
 {
     public float rotationSpeed = 50f;
-    public float maxXAngle = -15f;
-
-    private bool onCanon = false;
-
-    private void OnMouseDown()
-    {
-        onCanon = true;
-    }
-
-    private void OnMouseUp() 
-    { 
-        onCanon = false; 
-    }
+    public GameObject barrel;
+    private float maxXAngle = -18f;
+    private float minXAngle = -85f;
 
     void Update()
     {
-        // Retrieve the current x rotation in Euler angles
-        float currentXAngle = transform.eulerAngles.x;
         float rotationDelta = 0f;
 
-        // Convert from 0-360 to -180 to 180 for easier clamping
-        if (currentXAngle > 180f)
-        {
-            currentXAngle -= 360f;
-        }
-
-        // Move canon up
-        if (Input.GetKey(KeyCode.UpArrow) && onCanon)
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             rotationDelta = -rotationSpeed * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.DownArrow) && onCanon) // Move canon down
+        else if (Input.GetKey(KeyCode.DownArrow))
         {
             rotationDelta = rotationSpeed * Time.deltaTime;
         }
 
-        // Compute the new angle and clamp it between minXAngle and maxXAngle
-        float newXAngle = Mathf.Clamp(currentXAngle + rotationDelta, -90, maxXAngle);
+        if (rotationDelta != 0f)
+        {
+            // Quaternion representing that small X‐axis rotation
+            Quaternion deltaQuat = Quaternion.AngleAxis(rotationDelta, Vector3.right);
 
-        // Update the canonBase rotation. We only change the x component and keep y and z unchanged.
-        transform.eulerAngles = new Vector3(newXAngle, transform.eulerAngles.y, transform.eulerAngles.z);
+            transform.localRotation = transform.localRotation * deltaQuat;
+
+            // Read back the Euler angles so we can clamp the X component
+            Vector3 e = transform.localEulerAngles;
+            float x = e.x;
+
+            // Convert from [0..360) to (-180..+180] for intuitive clamping
+            if (x > 180f)
+            {
+                x -= 360f;
+            }
+
+            // Clamp between minXAngle and maxXAngle
+            if (x > maxXAngle)
+            {
+                x = maxXAngle;
+            }
+            else if (x < minXAngle)
+            {
+                x = minXAngle;
+            }
+
+            // Convert back into [0..360) if negative
+            if (x < 0f)
+            {
+                x += 360f;
+            }
+
+            transform.localRotation = Quaternion.Euler(x, e.y, e.z);
+            barrel.transform.localRotation = Quaternion.Euler(x, e.y, e.z);
+        }
     }
 }
