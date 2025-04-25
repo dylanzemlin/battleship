@@ -273,7 +273,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 783687536}
   m_SourcePrefab: {fileID: 100100000, guid: e85bb779764b8e446909159b35691f13, type: 3}
---- !u!43 &694562606
+--- !u!43 &614942600
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -551,6 +551,23 @@ MonoBehaviour:
   planetTrans: {fileID: 1877368752}
   ships: []
   shipIndex: 0
+--- !u!114 &824533237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824533231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9442da1df687ba448b37276e9428067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treasureChestPrefab: {fileID: 919132149155446097, guid: f50adba6aba624943bde965878a3db3a, type: 3}
+  translateSpeed: 2
+  rotationSpeed: 50
+  scaleAmount: 5
+  duration: 3
 --- !u!1001 &1262256652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1380,19 +1397,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3131251930405482612, guid: ef2729af78122ff43940da9e3fb520e8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.72808474
+      value: 0.7181137
       objectReference: {fileID: 0}
     - target: {fileID: 3131251930405482612, guid: ef2729af78122ff43940da9e3fb520e8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48503184
+      value: 0.49243984
       objectReference: {fileID: 0}
     - target: {fileID: 3131251930405482612, guid: ef2729af78122ff43940da9e3fb520e8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.48438406
+      value: 0.4917385
       objectReference: {fileID: 0}
     - target: {fileID: 3131251930405482612, guid: ef2729af78122ff43940da9e3fb520e8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.002994039
+      value: 0.0029927685
       objectReference: {fileID: 0}
     - target: {fileID: 3184648897011288596, guid: ef2729af78122ff43940da9e3fb520e8, type: 3}
       propertyPath: m_Mesh
@@ -1405,7 +1422,7 @@ PrefabInstance:
     - target: {fileID: 4151051576587106268, guid: ef2729af78122ff43940da9e3fb520e8, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 694562606}
+      objectReference: {fileID: 614942600}
     - target: {fileID: 6873019782176300530, guid: ef2729af78122ff43940da9e3fb520e8, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.95
@@ -1606,6 +1623,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2286994958727460309, guid: e8a831f31abbee14aa343eddcc9007e9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 824533236}
+    - targetCorrespondingSourceObject: {fileID: 2286994958727460309, guid: e8a831f31abbee14aa343eddcc9007e9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 824533237}
   m_SourcePrefab: {fileID: 100100000, guid: e8a831f31abbee14aa343eddcc9007e9, type: 3}
 --- !u!1001 &8831582567374281297
 PrefabInstance:
