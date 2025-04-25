@@ -3,10 +3,15 @@ using UnityEngine;
 
 public class Cannon : BaseWeapon
 {
+    private Animator m_Animator;
+    private float rawX;
+
     public override void Fire()
     {
         GameObject ship = this.transform.parent.gameObject.transform.parent.gameObject;
         bool isSelected = ship.GetComponent<PirateShip>().isSelected;
+        
+        m_Animator = this.GetComponent<Animator>();
 
         if (isSelected)
         {
@@ -22,6 +27,11 @@ public class Cannon : BaseWeapon
 
             scrpt.planetCenter = GameObject.Find("Planet").transform; // Assuming the planet is named "Planet"
             scrpt.Fire(barrel.transform.forward, 50f);
+
+            if (rawX > -52f)
+                m_Animator.SetTrigger("Fire");
+            else
+                m_Animator.SetTrigger("Fire Up");
 
             // 
             ParticleSystemController system = GameController.Instance.explosionController;
@@ -44,5 +54,12 @@ public class Cannon : BaseWeapon
     {
         // Perform the base weapon update
         OnUpdate();
+
+        rawX = this.transform.GetChild(0).transform.GetChild(1).transform.localEulerAngles.x;
+
+        if (rawX > 180f)
+        {
+            rawX -= 360f;
+        }
     }
 }

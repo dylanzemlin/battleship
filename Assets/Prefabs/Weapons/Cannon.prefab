@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4312156824973756376}
   - component: {fileID: 3212955142317880532}
   - component: {fileID: 1474464298708632062}
+  - component: {fileID: 6316527618221329626}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -33,7 +34,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5070826603640848999}
-  - {fileID: 7676826520312366769}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4312156824973756376
@@ -117,6 +117,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &6316527618221329626
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253160833391569234}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9844dfe3bcce2524e9426690760805f7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6728450125908763999
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,12 +339,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8171835539353650418}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.15872532, y: -0, z: -0, w: 0.98732287}
-  m_LocalPosition: {x: 0, y: 0.372, z: 0.138}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.000647217, y: -0, z: -0, w: -0.9999998}
+  m_LocalPosition: {x: 0, y: 0.00015483088, z: 0.0012298604}
+  m_LocalScale: {x: 0.008106319, y: 0.008106322, z: 0.00810632}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2234190959724294428}
+  m_Father: {fileID: 2041891931382626141}
   m_LocalEulerAnglesHint: {x: -18.266, y: 0, z: 0}
 --- !u!1001 &4743847936794846604
 PrefabInstance:
@@ -373,6 +395,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
       objectReference: {fileID: 0}
@@ -382,15 +412,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.987256
+      value: 0.98768836
       objectReference: {fileID: 0}
     - target: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.15914024
+      value: 0.1564345
       objectReference: {fileID: 0}
     - target: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -18.314
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -409,6 +439,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3878656168337803411}
+    - targetCorrespondingSourceObject: {fileID: -2484921068739079471, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7676826520312366769}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
       insertIndex: -1
@@ -437,7 +470,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 50
-  text: {fileID: 1310200308765229360}
   barrel: {fileID: 8171835539353650418}
 --- !u!4 &5070826603640848999 stripped
 Transform:

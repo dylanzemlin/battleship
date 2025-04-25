@@ -57,7 +57,6 @@ public class KeyboardCanonAiming : MonoBehaviour
             }
 
             transform.localRotation = Quaternion.Euler(x, e.y, e.z);
-            barrel.transform.localRotation = Quaternion.Euler(x, e.y, e.z);
         }
     }
 }
