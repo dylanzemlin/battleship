@@ -6,6 +6,7 @@ public class Planet : MonoBehaviour
 {
     public float radius = 1;
     public int resolution = 3;
+    public float rotationSpeed = 5;
     public TerrainGeneration.TerrainOptions terrainOptions;
 
     // Components
@@ -97,6 +98,10 @@ public class Planet : MonoBehaviour
             _dirty = false;
             Regenerate();
         }
+
+        // Rotate the planet given the speed on two axes
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
+        transform.Rotate(Vector3.right, rotationSpeed * Time.deltaTime, Space.World);
     }
 
     private void OnValidate() {

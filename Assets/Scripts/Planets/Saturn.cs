@@ -9,7 +9,12 @@ public class Saturn : MonoBehaviour
    private GameObject saturn;
 
     public float speed = 10f;
+    public Vector3 rotationSphere = new Vector3(-1,0,0);
+    public float rotationSphere_speed = 1f;
+    public Vector3 rotationTorus = new Vector3(0,0,1);
+    public float rotationTorus_speed = 1f;
     private float radius;
+    
 
     void Start()
     {
@@ -26,8 +31,7 @@ public class Saturn : MonoBehaviour
         {
             // Instantiate the FBX prefab at the origin (0, 0, 0)
             saturn = Instantiate(fbxPrefab, start, Quaternion.identity);
-            saturn.transform.localScale = new Vector3(100f, 100f, 10f);
-            // fish.transform.Rotate(90f, 0f, 0f);
+            saturn.transform.localScale = new Vector3(70f, 70f, 70f);
         }
         else
         {
@@ -41,5 +45,9 @@ public class Saturn : MonoBehaviour
     {
         // make saturn orbit around earth
         saturn.transform.RotateAround(target.position, new Vector3(target.position.x + speed, target.position.y + speed, transform.position.z), speed * Time.deltaTime);
+        // Make Saturn Sphere rotate
+        saturn.transform.GetChild(0).Rotate(rotationSphere * rotationSphere_speed * Time.deltaTime);
+        // Make Saturn Torus rotate
+        saturn.transform.GetChild(1).Rotate(rotationTorus * rotationTorus_speed * Time.deltaTime);
     }
 }

@@ -14,7 +14,9 @@ public class GameController : MonoSingleton<GameController>
 
     // Particle Systems
     public ParticleSystem waterSplash;
-    
+
+    public ParticleSystem smokeBurst;
+
     public ParticleSystemController explosionController;
 
     private List<GameObject> shipInstances = new();
