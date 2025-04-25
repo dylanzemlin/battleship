@@ -5484,6 +5484,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5501468362801429108}
     m_Modifications:
+    - target: {fileID: 1186641658538755535, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Text
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310200308765229360, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -5538,7 +5546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4253160833391569234, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_Name
-      value: Cannon (3)
+      value: Cannon 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5854,6 +5862,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5501468362801429108}
     m_Modifications:
+    - target: {fileID: 1186641658538755535, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Text
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310200308765229360, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_text
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -5908,7 +5924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4253160833391569234, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_Name
-      value: Cannon (2)
+      value: Cannon 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5982,7 +5998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4253160833391569234, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_Name
-      value: Cannon
+      value: Cannon 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6002,6 +6018,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5501468362801429108}
     m_Modifications:
+    - target: {fileID: 1186641658538755535, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Text
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310200308765229360, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_text
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -6056,7 +6080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4253160833391569234, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_Name
-      value: Cannon (1)
+      value: Cannon 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
