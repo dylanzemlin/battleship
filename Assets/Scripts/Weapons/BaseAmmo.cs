@@ -94,5 +94,27 @@ public class BaseAmmo : MonoBehaviour
 
         // Trigger the water splash visual effect
         system.Play();
+
+
+        // Create New Instance of fishScatterParticlePrefab --------------------------
+        GameObject fishScatterInstance = Instantiate(GameController.Instance.fishScatterParticlePrefab, transform.position, Quaternion.identity);
+        if (fishScatterInstance == null) {
+            Debug.LogWarning("Could not instantiate the fishScatterParticlePrefab from GameController.Instance");
+        } else {
+            // set the direction of the particle system to the planet normal
+            fishScatterInstance.transform.forward = planetNormal;
+            // fishScatterInstance.transform.position = Vector3.MoveTowards(fishScatterInstance.transform.position, planetCenter.position, 3f);
+            fishScatterInstance.transform.rotation = Quaternion.LookRotation(planetNormal, Vector3.up);
+            // Play the particle system
+            ParticleSystem fishScatterParticles = fishScatterInstance.GetComponent<ParticleSystem>();
+            if (fishScatterParticles == null) {
+                Debug.LogWarning("Could not access fish Scatter particle system from fishScatterInstance");
+            } else {
+                fishScatterParticles.Play();
+            }
+        }
+
+        // Destroy Ammo ---------------------------------------------------------------
+        Destroy(gameObject);
     }
 }
