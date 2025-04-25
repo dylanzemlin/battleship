@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/textures/fish_all.png.meta
 guid: 2f2365c9dd00e1049a09ca050d98b836
+========
+guid: ab15b82ea03492f4fa24275d1ba37c9a
+>>>>>>>> mastfall:Assets/Prefabs/textures/moon-color.tif.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

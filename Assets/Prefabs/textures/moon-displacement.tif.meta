@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/textures/moon-displacement.tif.meta
 guid: f65355542c5632e4788f93c3867840b6
+========
+guid: 399f5014273c68d4780019e92e0e57dd
+>>>>>>>> mastfall:Assets/Prefabs/textures/saturn_sphere_diffuse.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

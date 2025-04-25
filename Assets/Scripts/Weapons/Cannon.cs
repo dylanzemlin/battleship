@@ -48,6 +48,39 @@ public class Cannon : BaseWeapon
             system.Stop();
             system.Play();
         }
+
+        scrpt.planetCenter = GameObject.Find("Planet").transform; // Assuming the planet is named "Planet"
+        scrpt.Fire(barrel.transform.forward, 50f);
+
+        // 
+        ParticleSystemController system = GameController.Instance.explosionController;
+        if (system == null)
+        {
+            Debug.LogError("ParticleSystemController not found in GameController.");
+            return;
+        }
+
+        // Create a new transform with +3 z
+        Vector3 newPos = barrel.transform.position + barrel.transform.forward * 3f;
+        system.Move(newPos);
+        system.Rotate(barrel.transform.rotation);
+        system.Stop();
+        system.Play();
+
+        // Now do the smoke animation
+        ParticleSystem smoke = GameController.Instance.smokeBurst;
+        if (smoke == null)
+        {
+            Debug.LogError("Smoke particle system not found in GameController.");
+            return;
+        }
+
+        smoke.transform.position = newPos;
+        smoke.transform.position += -transform.forward * 4f;
+        smoke.transform.position += -transform.up * 2f;
+        smoke.transform.forward = -transform.forward;
+        smoke.transform.rotation = Quaternion.LookRotation(-transform.forward, Vector3.up);
+        smoke.Play();
     }
 
     private void Update()
