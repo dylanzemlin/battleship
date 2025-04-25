@@ -3,12 +3,18 @@ using UnityEngine;
 public abstract class BaseWeapon : MonoBehaviour {
     public GameObject ammoPrefab;
     public GameObject barrel;
+    public KeyCode key;
 
     public virtual void Fire() {
         Debug.LogWarning("BaseWeapon.Fire() called");
     }
 
     protected void OnUpdate() {
+        if (Input.GetKeyDown(key))
+        {
+            Fire();
+        }
+
         if (!Input.GetMouseButtonDown(0)) {
             return;
         }
@@ -22,7 +28,5 @@ public abstract class BaseWeapon : MonoBehaviour {
         if (hit.collider.gameObject != gameObject) {
             return;
         }
-
-        Fire();
     }
 }

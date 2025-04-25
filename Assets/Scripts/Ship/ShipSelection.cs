@@ -101,7 +101,7 @@ public class ShipSelection : MonoBehaviour
     {
         // Compute direction vector from A to B
         Vector3 direction = ship.transform.position - planetTrans.position;
-        float placementDistance = 30.0f;
+        float placementDistance = 100.0f;
 
         // Compute placement position at the given distance along the direction
         Vector3 placementPos = ship.transform.position + direction.normalized * placementDistance;

@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoPrefab: {fileID: 3531121501198990775, guid: c50d8838e9188ee4992b904c35d56d3e, type: 3}
   barrel: {fileID: 8171835539353650418}
+  key: 0
 --- !u!65 &3212955142317880532
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -68,7 +69,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1.39, z: 1.51}
   m_Center: {x: 0, y: 0.12, z: 0.15}
@@ -377,10 +378,94 @@ PrefabInstance:
       value: Model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 65702495048144492, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+    - {fileID: -6733177361254619370, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+    - {fileID: 5233112405309087440, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1947037481006238350}
+    - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2813939486126657268}
+    - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5787757699057701517}
+    - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 385828817017593576}
   m_SourcePrefab: {fileID: 100100000, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+--- !u!1 &4031501504512525503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8513859187771203891, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}
+  m_PrefabInstance: {fileID: 4743847936794846604}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1947037481006238350
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4031501504512525503}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 6.9561906e-17, y: -1.1641532e-10, z: 0.0012237463}
+--- !u!114 &2813939486126657268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4031501504512525503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96189a1fb82d5a3468c6ee4c3a6ae72b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  maxXAngle: -15
+--- !u!114 &5787757699057701517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4031501504512525503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f43d5ce445cf146abe712703f3d3cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
+  maxXAngle: -15
+--- !u!114 &385828817017593576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4031501504512525503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 632cb95f6b505ff41a8957af8712245d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoPrefab: {fileID: 0}
+  barrel: {fileID: 0}
+  key: 0
 --- !u!4 &5070826603640848999 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 02b713cb0dd299e4ca199878712d06ac, type: 3}

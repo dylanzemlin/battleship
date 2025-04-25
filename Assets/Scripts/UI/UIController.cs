@@ -28,6 +28,7 @@ public class UIController : MonoBehaviour
             ShipSelection instance = GameController.Instance.GetComponentInParent<ShipSelection>();
 
             instance.moveCamera(instance.ships[instance.shipIndex]);
+            instance.ships[instance.shipIndex].GetComponent<PirateShip>().selectShip();
         }
     }
 }

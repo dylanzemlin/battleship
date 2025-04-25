@@ -14,11 +14,13 @@ public class PirateShip : MonoBehaviour
     public void selectShip()
     {
         isSelected = true;
+        GetComponent<Outline>().enabled = true;
     }
 
     // Deselect ship
     public void deselectShip()
     {
         isSelected = false;
+        GetComponent<Outline>().enabled = false;
     }
 }
