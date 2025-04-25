@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Prefabs/textures/moon-color.tif.meta
-guid: ab15b82ea03492f4fa24275d1ba37c9a
-========
-guid: f65355542c5632e4788f93c3867840b6
->>>>>>>> mastfall:Assets/Prefabs/textures/moon-displacement.tif.meta
+guid: 11541c8043889f442818b7f681b240e1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
