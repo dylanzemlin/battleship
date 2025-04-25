@@ -132,6 +132,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1370117599099112491, guid: b31fda23845988e4e90c8060cb173205, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1942750031502791759, guid: b31fda23845988e4e90c8060cb173205, type: 3}
       propertyPath: m_Name
       value: spawnAmmo
@@ -244,6 +248,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -12.03
       objectReference: {fileID: 0}
+    - target: {fileID: 2934409196956030094, guid: b31fda23845988e4e90c8060cb173205, type: 3}
+      propertyPath: m_text
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2971473151314264448, guid: b31fda23845988e4e90c8060cb173205, type: 3}
       propertyPath: m_Name
       value: PirateShipUpdated Variant
@@ -331,6 +339,10 @@ PrefabInstance:
     - target: {fileID: 6428740518874715027, guid: b31fda23845988e4e90c8060cb173205, type: 3}
       propertyPath: m_LocalPosition.z
       value: -11.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544550677781573382, guid: b31fda23845988e4e90c8060cb173205, type: 3}
+      propertyPath: m_text
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6566437140343552034, guid: b31fda23845988e4e90c8060cb173205, type: 3}
       propertyPath: m_LocalPosition.z

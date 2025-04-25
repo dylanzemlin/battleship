@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
@@ -13,6 +14,21 @@ public class UIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameController.Instance.SetSelectedShipByIndex(-1);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow)) // Cycle to the next ship
+        {
+            GameController.Instance.GetComponent<ShipSelection>().nextShip();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) // Cycle to the previous ship
+        {
+            GameController.Instance.GetComponent<ShipSelection>().previousShip();
+        }
+        if (Input.GetKeyDown(KeyCode.F)) // Focus on currrent ship
+        {
+            ShipSelection instance = GameController.Instance.GetComponentInParent<ShipSelection>();
+
+            instance.moveCamera(instance.ships[instance.shipIndex]);
+            instance.ships[instance.shipIndex].GetComponent<PirateShip>().selectShip();
         }
     }
 }

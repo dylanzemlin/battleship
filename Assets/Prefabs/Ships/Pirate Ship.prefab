@@ -1801,9 +1801,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4105325483880113419}
+  - component: {fileID: 3451961961434770907}
+  - component: {fileID: 4387632794358010398}
   m_Layer: 0
   m_Name: Pirate Ship
-  m_TagString: Untagged
+  m_TagString: Pirate Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1827,6 +1829,37 @@ Transform:
   - {fileID: 2266973255021856581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.124}
+--- !u!114 &3451961961434770907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2971473151314264448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a7b4ac12f27a34d85d39ba4c538eee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSelected: 0
+--- !u!114 &4387632794358010398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2971473151314264448}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &3038569335469492154
 GameObject:
   m_ObjectHideFlags: 0
@@ -5484,6 +5517,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5501468362801429108}
     m_Modifications:
+    - target: {fileID: 1186641658538755535, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Text
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310200308765229360, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -5510,23 +5551,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.70685637
       objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.01881835
       objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: -0.70685637
       objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.01881835
       objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 3.05
       objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -5538,7 +5579,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4253160833391569234, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_Name
-      value: Cannon (3)
+      value: Cannon 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312156824973756376, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: key
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416610877368300950, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5854,6 +5903,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5501468362801429108}
     m_Modifications:
+    - target: {fileID: 1186641658538755535, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Text
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310200308765229360, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_text
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -5908,7 +5965,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4253160833391569234, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_Name
-      value: Cannon (2)
+      value: Cannon 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312156824973756376, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: key
+      value: 51
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416610877368300950, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5982,7 +6047,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4253160833391569234, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_Name
-      value: Cannon
+      value: Cannon 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312156824973756376, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: key
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416610877368300950, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6002,6 +6075,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5501468362801429108}
     m_Modifications:
+    - target: {fileID: 1186641658538755535, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Text
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310200308765229360, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_text
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2234190959724294428, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -6056,7 +6137,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4253160833391569234, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
       propertyPath: m_Name
-      value: Cannon (1)
+      value: Cannon 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312156824973756376, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: key
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416610877368300950, guid: c42f3722da33949438d3f8df3a59ea8d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
