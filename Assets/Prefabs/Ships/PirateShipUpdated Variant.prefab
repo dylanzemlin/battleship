@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be0992eb273c63c4fbefcab6ec3d18a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonSpawnPoint: {fileID: 0}
+  AmmoInCannonSpawnPoint: {fileID: 0}
 --- !u!65 &5725193571588217317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -604,7 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be0992eb273c63c4fbefcab6ec3d18a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonSpawnPoint: {fileID: 0}
+  AmmoInCannonSpawnPoint: {fileID: 0}
 --- !u!65 &8592033508159617809
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be0992eb273c63c4fbefcab6ec3d18a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonSpawnPoint: {fileID: 8697395793725371558}
+  AmmoInCannonSpawnPoint: {fileID: 0}
 --- !u!65 &4933362521347130208
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -753,11 +753,6 @@ MonoBehaviour:
   duration: 2
   ammoPrefabToReload: {fileID: 8356582801193725468}
   reloadPointOnDeck: {fileID: 8983397480735977576}
---- !u!4 &8697395793725371558 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6566437140343552034, guid: b31fda23845988e4e90c8060cb173205, type: 3}
-  m_PrefabInstance: {fileID: 2563657239359507588}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3763833817114835615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -861,7 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be0992eb273c63c4fbefcab6ec3d18a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonSpawnPoint: {fileID: 0}
+  AmmoInCannonSpawnPoint: {fileID: 0}
 --- !u!65 &4051524880347433325
 BoxCollider:
   m_ObjectHideFlags: 0

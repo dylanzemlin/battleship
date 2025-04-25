@@ -16,7 +16,7 @@ public class Cannon : BaseWeapon
         }
 
         scrpt.planetCenter = GameObject.Find("Planet").transform; // Assuming the planet is named "Planet"
-        scrpt.Fire(barrel.transform.forward, 50f);
+        scrpt.Fire(barrel.transform.forward, 50f, gameObject);
 
         // 
         ParticleSystemController system = GameController.Instance.explosionController;

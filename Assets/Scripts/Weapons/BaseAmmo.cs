@@ -14,10 +14,15 @@ public class BaseAmmo : MonoBehaviour
 
     // === FIRING LOGIC ===
 
-    public void Fire(Vector3 direction, float speed)
+    // === AMMO PRIVATE PROPERTIES ===
+    private GameObject firingWeapon;
+
+    public void Fire(Vector3 direction, float speed, GameObject weapon)
     {
         // Applies initial velocity to the ammo in the given direction and speed
         rb.linearVelocity = direction.normalized * speed;
+        // Set What weapon fired
+        firingWeapon = weapon;
     }
 
     // === PHYSICS & GRAVITY ===
@@ -73,48 +78,47 @@ public class BaseAmmo : MonoBehaviour
                     // You could add a Debug.Log here if you want to confirm hits
                 }
             }
+        } else { 
+            // === SPLASH EFFECT (WATER IMPACT) ===
 
-            return; // Skip the splash effect
-        }
+            // Access the shared splash particle system from the game controller
+            ParticleSystem system = GameController.Instance.waterSplash;
 
-        // === SPLASH EFFECT (WATER IMPACT) ===
+            // Move the particle system to the point of impact
+            system.transform.position = transform.position;
 
-        // Access the shared splash particle system from the game controller
-        ParticleSystem system = GameController.Instance.waterSplash;
+            // Calculate the surface normal based on impact point and planet center
+            Vector3 planetNormal = (transform.position - planetCenter.position).normalized;
 
-        // Move the particle system to the point of impact
-        system.transform.position = transform.position;
+            // Orient the splash to look "away" from the planet, using surface normal
+            system.transform.forward = planetNormal;
+            system.transform.rotation = Quaternion.LookRotation(planetNormal, Vector3.up);
 
-        // Calculate the surface normal based on impact point and planet center
-        Vector3 planetNormal = (transform.position - planetCenter.position).normalized;
+            // Trigger the water splash visual effect
+            system.Play();
 
-        // Orient the splash to look "away" from the planet, using surface normal
-        system.transform.forward = planetNormal;
-        system.transform.rotation = Quaternion.LookRotation(planetNormal, Vector3.up);
-
-        // Trigger the water splash visual effect
-        system.Play();
-
-
-        // Create New Instance of fishScatterParticlePrefab --------------------------
-        GameObject fishScatterInstance = Instantiate(GameController.Instance.fishScatterParticlePrefab, transform.position, Quaternion.identity);
-        if (fishScatterInstance == null) {
-            Debug.LogWarning("Could not instantiate the fishScatterParticlePrefab from GameController.Instance");
-        } else {
-            // set the direction of the particle system to the planet normal
-            fishScatterInstance.transform.forward = planetNormal;
-            // fishScatterInstance.transform.position = Vector3.MoveTowards(fishScatterInstance.transform.position, planetCenter.position, 3f);
-            fishScatterInstance.transform.rotation = Quaternion.LookRotation(planetNormal, Vector3.up);
-            // Play the particle system
-            ParticleSystem fishScatterParticles = fishScatterInstance.GetComponent<ParticleSystem>();
-            if (fishScatterParticles == null) {
-                Debug.LogWarning("Could not access fish Scatter particle system from fishScatterInstance");
+            // === SPLASH EFFECT (SCATTER FISH) ===
+            GameObject fishScatterInstance = Instantiate(GameController.Instance.fishScatterParticlePrefab, transform.position, Quaternion.identity);
+            if (fishScatterInstance == null) {
+                Debug.LogWarning("Could not instantiate the fishScatterParticlePrefab from GameController.Instance");
             } else {
-                fishScatterParticles.Play();
+                // set the direction of the particle system to the planet normal
+                fishScatterInstance.transform.forward = planetNormal;
+                fishScatterInstance.transform.rotation = Quaternion.LookRotation(planetNormal, Vector3.up);
+                // Play the particle system
+                ParticleSystem fishScatterParticles = fishScatterInstance.GetComponent<ParticleSystem>();
+                if (fishScatterParticles == null) {
+                    Debug.LogWarning("Could not access fish Scatter particle system from fishScatterInstance");
+                } else {
+                    fishScatterParticles.Play();
+                }
             }
+
+            // === SPLASH EFFECT (FIND TREASURE) ===
+            GameController.Instance.GetComponent<TreasureAnimation>().searchForTreasure(firingWeapon, transform.position, planetNormal, planetCenter.position);
         }
 
-        // Destroy Ammo ---------------------------------------------------------------
+        // === Destory Ammo On Impact ===
         Destroy(gameObject);
     }
 }
