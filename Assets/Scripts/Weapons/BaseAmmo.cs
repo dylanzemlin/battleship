@@ -14,10 +14,14 @@ public class BaseAmmo : MonoBehaviour
 
     // === FIRING LOGIC ===
 
-    public void Fire(Vector3 direction, float speed)
+    // === AMMO PRIVATE PROPERTIES ===
+    private GameObject firingShip;
+
+    public void Fire(Vector3 direction, float speed, GameObject ship)
     {
         // Applies initial velocity to the ammo in the given direction and speed
         rb.linearVelocity = direction.normalized * speed;
+        firingShip = ship;
     }
 
     // === PHYSICS & GRAVITY ===
@@ -73,7 +77,8 @@ public class BaseAmmo : MonoBehaviour
                     // You could add a Debug.Log here if you want to confirm hits
                 }
             }
-
+            // === Destory Ammo On Impact ===
+            Destroy(gameObject);
             return; // Skip the splash effect
         }
 
@@ -96,7 +101,7 @@ public class BaseAmmo : MonoBehaviour
         system.Play();
 
 
-        // Create New Instance of fishScatterParticlePrefab --------------------------
+        // === SPLASH EFFECT (FISH SCATTER) ===
         GameObject fishScatterInstance = Instantiate(GameController.Instance.fishScatterParticlePrefab, transform.position, Quaternion.identity);
         if (fishScatterInstance == null) {
             Debug.LogWarning("Could not instantiate the fishScatterParticlePrefab from GameController.Instance");
@@ -114,7 +119,10 @@ public class BaseAmmo : MonoBehaviour
             }
         }
 
-        // Destroy Ammo ---------------------------------------------------------------
+        // === SPLASH EFFECT (FIND TREASURE) ===
+        GameController.Instance.GetComponent<TreasureAnimation>().searchForTreasure(firingShip, transform.position, planetNormal, planetCenter.position);
+
+        // === Destory Ammo On Impact ===
         Destroy(gameObject);
     }
 }
