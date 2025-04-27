@@ -9,8 +9,10 @@ public class ammoDeckToCannon : MonoBehaviour
     private void Start()
     {
         // Extract the number from this ammo’s name (e.g., "Ammo3" → "3")
-        string number = System.Text.RegularExpressions.Regex.Match(name, @"\d+").Value;
-        Debug.Log($"Ammo {name} extracted number: {number}");
+        string cleanName = name.Replace("(Clone)", "").Trim();
+        string number = System.Text.RegularExpressions.Regex.Match(cleanName, @"\d+").Value;
+        Debug.Log($"Ammunition {name} (cleaned to {cleanName}) extracted number: {number}");
+
 
         if (!string.IsNullOrEmpty(number))
         {
@@ -32,12 +34,12 @@ public class ammoDeckToCannon : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning($"Cannon{number} has no child named 'Point{number}'");
+                    Debug.LogWarning($"Cannon1{number} has no child named 'Point{number}'");
                 }
             }
             else
             {
-                Debug.LogWarning($"No GameObject named 'Cannon{number}' found.");
+                Debug.LogWarning($"No GameObject named 'Cannon1{number}' found.");
             }
         }
         else
@@ -56,8 +58,9 @@ public class ammoDeckToCannon : MonoBehaviour
             transform.position = ammoInCannonSpawnPoint.position;
             transform.rotation = ammoInCannonSpawnPoint.rotation;
             transform.SetParent(ammoInCannonSpawnPoint);
-
-            cannon.loadedAmmo = GetComponent<BaseAmmo>();  // Now directly using cannon
+            
+            // Now directly using cannon
+            cannon.loadedAmmo = GetComponent<ammoTrajectoryAndCollision>(); 
             Debug.Log($"{name} successfully loaded into {cannon.name}");
             
         }

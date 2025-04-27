@@ -12,7 +12,7 @@ public class ammoTrajectoryAndCollision : MonoBehaviour
     public Rigidbody rb;                                   // Physics body for ammo
     public Transform planetCenter;                         // Center of gravity for "planet-style" force
 
-    private bool hasBeenFired = false;                     // Flag to ignore collisions before being fired
+    public bool hasBeenFired = false;                     // Flag to ignore collisions before being fired
 
     // === Initialization ===
     private void Start()
@@ -66,11 +66,25 @@ public class ammoTrajectoryAndCollision : MonoBehaviour
         if (ammoPrefabToReload != null && reloadPointOnDeck != null)
         {
             GameObject newAmmo = Instantiate(ammoPrefabToReload, reloadPointOnDeck.position, reloadPointOnDeck.rotation);
-
+            
             // Freeze new ammo physics until clicked
             Rigidbody newRb = newAmmo.GetComponent<Rigidbody>();
             if (newRb != null)
                 newRb.isKinematic = true;
+
+            string newAmmoNumber = System.Text.RegularExpressions.Regex.Match(newAmmo.name, @"\d+").Value;
+
+            if (int.TryParse(newAmmoNumber, out int num))
+            {
+                if (num == 1 || num == 3)
+                {
+                    newAmmo.transform.Rotate(0f, -90f, 0f, Space.Self);
+                }
+                else if (num == 2 || num == 4)
+                {
+                    newAmmo.transform.Rotate(0f, 90f, 0f, Space.Self);
+                }
+            }
 
             // Pass the reload spawn point to the new ammo
             ammoTrajectoryAndCollision newAmmoScript = newAmmo.GetComponent<ammoTrajectoryAndCollision>();
@@ -145,24 +159,28 @@ public class ammoTrajectoryAndCollision : MonoBehaviour
 
         Debug.Log($"Collision detected with: {other.collider.gameObject.name}");
 
-        // Ignore hitting your own cannon
         if (other.collider.gameObject.name.Contains("Cannon")) return;
 
-        // Ship impact logic
         if (other.collider.gameObject.name.Contains("Pirate Ship"))
         {
-            Transform mastTransform = other.collider.transform.Find("centerMast");
-
-            if (mastTransform != null)
+            // 🔥 Look for all masts inside the ship
+            foreach (Transform child in other.transform)
             {
-                MastFallOnHit mastFall = mastTransform.GetComponent<MastFallOnHit>();
-                if (mastFall != null)
-                    mastFall.TriggerFall();
+                if (child.name.Contains("Mast")) // centerMast, sternMast, bowMast, etc.
+                {
+                    MastFallOnHit mastFall = child.GetComponent<MastFallOnHit>();
+                    if (mastFall != null && !mastFall.shouldFall)
+                    {
+                        mastFall.TriggerFall();
+                        break; // stop after making ONE mast fall
+                    }
+                }
             }
 
-            Destroy(gameObject); // Destroy ammo after impact
+            Destroy(gameObject);
             return;
         }
+
 
         // === Water splash effect ===
         ParticleSystem splash = GameController.Instance.waterSplash;

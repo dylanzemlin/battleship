@@ -60,27 +60,25 @@ public class BaseAmmo : MonoBehaviour
         }
 
         // Check if the ammo hit a ship prefab called "PirateShipUpdated"
-        if (other.gameObject.name.Contains("PirateShipUpdated"))
+        if (other.gameObject.name.Contains("PirateShipClick"))
         {
-            // Try to find the child mast object inside the ship
-            Transform mastTransform = other.transform.Find("centerMast");
-
-            if (mastTransform != null)
+            foreach (Transform child in other.transform)
             {
-                // Attempt to get the falling mast behavior script
-                MastFallOnHit mastFall = mastTransform.GetComponent<MastFallOnHit>();
-
-                // If the script exists on the mast, trigger its fall animation/rotation
-                if (mastFall != null)
+                if (child.name.Contains("Mast")) // centerMast, sternMast, bowMast, etc.
                 {
-                    mastFall.TriggerFall();
-                    // You could add a Debug.Log here if you want to confirm hits
+                    MastFallOnHit mastFall = child.GetComponent<MastFallOnHit>();
+                    if (mastFall != null && !mastFall.shouldFall)
+                    {
+                        mastFall.TriggerFall();
+                        break; // stop after making ONE mast fall
+                    }
                 }
             }
-            // === Destory Ammo On Impact ===
+
             Destroy(gameObject);
-            return; // Skip the splash effect
+            return;
         }
+
 
         // === SPLASH EFFECT (WATER IMPACT) ===
 

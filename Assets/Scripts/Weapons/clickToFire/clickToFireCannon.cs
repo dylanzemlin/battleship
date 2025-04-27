@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class clickToFireCannon : BaseWeaponClick
 {
-    public BaseAmmo loadedAmmo; // Reference to the currently loaded ammo
+    public ammoTrajectoryAndCollision loadedAmmo; // Reference to currently loaded ammo
     public float launchSpeed = 50f; // How fast the ammo should be launched
-    public Transform fireDirectionTransform; // Optional: a child transform (like the barrel tip) to determine firing direction
+    public Transform fireDirectionTransform; // Child transform for aiming
 
     public override void Fire()
     {
@@ -12,16 +12,26 @@ public class clickToFireCannon : BaseWeaponClick
         {
             Debug.Log("Cannon fired using loaded ammo!");
 
-            // Detach the ammo from the cannon so it becomes independent
+            // Detach from cannon
             loadedAmmo.transform.SetParent(null);
 
-            // Determine the firing direction (prefer fireDirectionTransform if available)
+            // Unlock physics BEFORE firing
+            Rigidbody rb = loadedAmmo.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+                rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic; // important for fast collision
+            }
+
+            loadedAmmo.hasBeenFired = true; // 💥 Mark it as fired for collision logic
+
+            // Pick firing direction
             Vector3 fireDir = fireDirectionTransform != null ? fireDirectionTransform.forward : transform.forward;
 
-            // Trigger the ammo's firing logic
+            // Actually launch it
             loadedAmmo.Fire(fireDir, launchSpeed, gameObject);
 
-            // Clear the loaded ammo reference so the cannon is empty
+            // Clear loaded ammo
             loadedAmmo = null;
         }
         else
@@ -30,7 +40,7 @@ public class clickToFireCannon : BaseWeaponClick
             return;
         }
 
-        // Play explosion particle effect near barrel tip
+        // === Play Effects ===
         ParticleSystemController system = GameController.Instance.explosionController;
         if (system != null)
         {
@@ -41,7 +51,6 @@ public class clickToFireCannon : BaseWeaponClick
             system.Play();
         }
 
-        // Play smoke particle effect from barrel
         ParticleSystem smoke = GameController.Instance.smokeBurst;
         if (smoke != null)
         {
@@ -55,8 +64,6 @@ public class clickToFireCannon : BaseWeaponClick
 
     private void Update()
     {
-        // Call the inherited input-check logic from BaseWeapon
         OnUpdate();
     }
 }
-
