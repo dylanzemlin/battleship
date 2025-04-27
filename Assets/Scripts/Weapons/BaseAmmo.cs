@@ -1,146 +1,167 @@
-using UnityEngine;
+using UnityEngine; // Unity’s core engine library, providing GameObject, Rigidbody, Transform, etc.
 
-// RequireComponent ensures a Rigidbody is always attached to this GameObject
+// Ensure that any GameObject using this script automatically has a Rigidbody attached
 [RequireComponent(typeof(Rigidbody))]
 public class BaseAmmo : MonoBehaviour
 {
     // === CONFIGURABLE PROPERTIES ===
 
-    public Transform planetCenter;     // Reference to the center of the planet for gravity simulation
-    public float gravityStrength = 9.8f; // Gravity force applied toward the planet
-    public Transform visualModel;      // Optional: if you want to rotate visuals separately from physics
-
-    public Rigidbody rb;               // Rigidbody that will move the ammo
+    public Transform planetCenter;     // The Transform representing the planet’s center (for gravity pull)
+    public float gravityStrength = 9.8f; // The force applied as custom "gravity" towards the planet
+    public Transform visualModel;      // (Optional) Separate visual model for more flexible rotation control (vs. Rigidbody rotation)
+    
+    public Rigidbody rb;               // The Rigidbody component that handles physical movement
 
     // === FIRING LOGIC ===
 
-    // === AMMO PRIVATE PROPERTIES ===
+    // Private field to remember which ship fired the ammo (important for effects like treasure searches)
     private GameObject firingShip;
 
+    // === AMMO FIRING FUNCTION ===
     public void Fire(Vector3 direction, float speed, GameObject ship)
     {
-        // Applies initial velocity to the ammo in the given direction and speed
+        // Set the Rigidbody's linear velocity to shoot it in the given direction at the given speed
         rb.linearVelocity = direction.normalized * speed;
+        
+        // Record which ship fired this ammo
         firingShip = ship;
     }
 
-    // === PHYSICS & GRAVITY ===
-
+    // === PHYSICS & GRAVITY BEHAVIOR ===
     private void FixedUpdate()
     {
-        // Apply custom gravity that pulls ammo toward the planet's center
+        // Every physics update (fixed time steps) apply custom gravity toward the planet's center
         if (planetCenter != null)
         {
-            // Compute direction toward planet center
+            // Calculate the direction from ammo to the planet center (normalized)
             Vector3 gravityDirection = (planetCenter.position - transform.position).normalized;
-
-            // Apply a force toward the planet (like artificial gravity)
+            
+            // Apply a constant force toward the planet center (like gravity)
             rb.AddForce(gravityDirection * gravityStrength, ForceMode.Acceleration);
         }
 
-        // Smoothly rotate the ammo to face in the direction it’s flying
+        // Rotate ammo to face the way it’s flying (makes flight look natural)
         if (rb.linearVelocity != Vector3.zero)
         {
-            // Determine rotation facing the velocity direction
+            // Determine which way it should face based on velocity
             Quaternion rotation = Quaternion.LookRotation(rb.linearVelocity.normalized);
 
-            // Smoothly interpolate from current rotation to target rotation
+            // Smoothly rotate the ammo to that direction over time
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5f);
         }
     }
 
-    // === COLLISION & TRIGGER DETECTION ===
-
+    // === COLLISION AND TRIGGER LOGIC ===
     private void OnTriggerEnter(Collider other)
     {
-        // Ignore collisions with cannons since it is a firing point
+        // If the ammo collides with a cannon, ignore it (don't want to react to firing cannons)
         if (other.gameObject.name.Contains("Cannon"))
         {
-            return; // Skip processing
+            return; // Skip rest of the code
         }
 
-        // Check if the ammo hit a ship prefab called "PirateShipUpdated"
+        // === COLLISION WITH PIRATE SHIPS ===
+
+        // If the ammo collides with a ship called "PirateShipClick"
         if (other.gameObject.name.Contains("PirateShipClick"))
         {
+            // Check all child objects of the ship for masts
             foreach (Transform child in other.transform)
             {
-                if (child.name.Contains("Mast")) // centerMast, sternMast, bowMast, etc.
+                if (child.name.Contains("Mast")) // Look for parts named "Mast" (centerMast, sternMast, etc.)
                 {
+                    // Try to get the MastFallOnHit component to trigger its fall
                     MastFallOnHit mastFall = child.GetComponent<MastFallOnHit>();
                     if (mastFall != null && !mastFall.shouldFall)
                     {
-                        mastFall.TriggerFall();
-                        break; // stop after making ONE mast fall
+                        mastFall.TriggerFall(); // Start falling animation
+                        break; // Stop after triggering one mast
                     }
                 }
             }
 
-            Destroy(gameObject);
-            return;
+            Destroy(gameObject); // Destroy ammo after hitting ship
+            return; // Exit
         }
 
-        // Check if the ammo hit a ship prefab called "PirateShipUpdated"
+        // Similarly, if the ammo hits a ship called "Pirate Ship"
         if (other.gameObject.name.Contains("Pirate Ship"))
         {
+            // Same mast falling logic
             foreach (Transform child in other.transform)
             {
-                if (child.name.Contains("Mast")) // centerMast, sternMast, bowMast, etc.
+                if (child.name.Contains("Mast"))
                 {
                     MastFallOnHit mastFall = child.GetComponent<MastFallOnHit>();
                     if (mastFall != null && !mastFall.shouldFall)
                     {
                         mastFall.TriggerFall();
-                        break; // stop after making ONE mast fall
+                        break;
                     }
                 }
             }
 
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy ammo after impact
             return;
         }
 
+        // === IF HITTING SOMETHING ELSE (LIKE WATER) ===
 
-        // === SPLASH EFFECT (WATER IMPACT) ===
-
-        // Access the shared splash particle system from the game controller
+        // Retrieve water splash particle system from a central GameController instance
         ParticleSystem system = GameController.Instance.waterSplash;
 
-        // Move the particle system to the point of impact
+        // Move splash effect to where the collision happened
         system.transform.position = transform.position;
 
-        // Calculate the surface normal based on impact point and planet center
+        // Find the surface normal at the point of impact (perpendicular to the planet surface)
         Vector3 planetNormal = (transform.position - planetCenter.position).normalized;
 
-        // Orient the splash to look "away" from the planet, using surface normal
+        // Align the particle effect to face outward from planet
         system.transform.forward = planetNormal;
         system.transform.rotation = Quaternion.LookRotation(planetNormal, Vector3.up);
 
-        // Trigger the water splash visual effect
+        // Play the splash particle effect
         system.Play();
 
+        // === ADDITIONAL FISH SCATTER PARTICLES ===
 
-        // === SPLASH EFFECT (FISH SCATTER) ===
+        // Instantiate a new fish scatter particle effect at impact point
         GameObject fishScatterInstance = Instantiate(GameController.Instance.fishScatterParticlePrefab, transform.position, Quaternion.identity);
-        if (fishScatterInstance == null) {
+        
+        if (fishScatterInstance == null) 
+        {
             Debug.LogWarning("Could not instantiate the fishScatterParticlePrefab from GameController.Instance");
-        } else {
-            // set the direction of the particle system to the planet normal
+        } 
+        else 
+        {
+            // Align fish scatter to surface normal
             fishScatterInstance.transform.forward = planetNormal;
-            // fishScatterInstance.transform.position = Vector3.MoveTowards(fishScatterInstance.transform.position, planetCenter.position, 3f);
             fishScatterInstance.transform.rotation = Quaternion.LookRotation(planetNormal, Vector3.up);
-            // Play the particle system
+
+            // Play the fish scatter particles
             ParticleSystem fishScatterParticles = fishScatterInstance.GetComponent<ParticleSystem>();
-            if (fishScatterParticles == null) {
+            if (fishScatterParticles == null) 
+            {
                 Debug.LogWarning("Could not access fish Scatter particle system from fishScatterInstance");
-            } else {
+            } 
+            else 
+            {
                 fishScatterParticles.Play();
             }
         }
 
-        // === SPLASH EFFECT (FIND TREASURE) ===
-        GameController.Instance.GetComponent<TreasureAnimation>().searchForTreasure(firingShip, transform.position, planetNormal, planetCenter.position);
+        // === TREASURE SEARCH MINI-GAME ON WATER IMPACT ===
 
-        // === Destory Ammo On Impact ===
-        Destroy(gameObject);
+        // Tell the GameController to potentially find treasure at this impact location
+        GameController.Instance.GetComponent<TreasureAnimation>().searchForTreasure(
+            firingShip,          // The ship that fired the ammo
+            transform.position,  // Impact position
+            planetNormal,        // Which way is "up" at this point (relative to planet)
+            planetCenter.position // Center of planet
+        );
+
+        // === FINAL CLEANUP ===
+
+        Destroy(gameObject); // Destroy the fired ammo after handling collision and effects
     }
 }
