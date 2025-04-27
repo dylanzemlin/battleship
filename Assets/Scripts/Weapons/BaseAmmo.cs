@@ -79,6 +79,26 @@ public class BaseAmmo : MonoBehaviour
             return;
         }
 
+        // Check if the ammo hit a ship prefab called "PirateShipUpdated"
+        if (other.gameObject.name.Contains("Pirate Ship"))
+        {
+            foreach (Transform child in other.transform)
+            {
+                if (child.name.Contains("Mast")) // centerMast, sternMast, bowMast, etc.
+                {
+                    MastFallOnHit mastFall = child.GetComponent<MastFallOnHit>();
+                    if (mastFall != null && !mastFall.shouldFall)
+                    {
+                        mastFall.TriggerFall();
+                        break; // stop after making ONE mast fall
+                    }
+                }
+            }
+
+            Destroy(gameObject);
+            return;
+        }
+
 
         // === SPLASH EFFECT (WATER IMPACT) ===
 
