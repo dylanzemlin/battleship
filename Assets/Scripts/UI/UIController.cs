@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
+    public GameObject propertyAdjustmentObject;
+
+    void Start()
+    {
+        propertyAdjustmentObject.SetActive(false);
+    }
+
     public void OnShipSelected(int shipIndex)
     {
         GameController.Instance.SetSelectedShipByIndex(shipIndex);
@@ -29,6 +36,12 @@ public class UIController : MonoBehaviour
 
             instance.moveCamera(instance.ships[instance.shipIndex]);
             instance.ships[instance.shipIndex].GetComponent<PirateShip>().selectShip();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // Toggle the property adjustment object on and off
+            propertyAdjustmentObject.SetActive(!propertyAdjustmentObject.activeSelf);
         }
     }
 }

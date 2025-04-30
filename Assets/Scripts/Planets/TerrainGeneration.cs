@@ -66,11 +66,11 @@ public class TerrainGeneration
         public float heightScale;
 
         [Header("Fractal Noise")]
-        public int octaves;
-        public float baseFrequency;
-        public float lacunarity;    // frequency multiplier per octave
-        public float persistence;   // amplitude reduction per octave
-        public float noiseOffset;
+        public int octaves; // the number of noise layers
+        public float baseFrequency; // how "zoomed in" the noise is, or when visualized how big the features are
+        public float lacunarity; // detail increase per octave
+        public float persistence; // how strong each layer is
+        public float noiseOffset; // just shifts the noise pattern
 
         [Header("Continent Tweaking")]
         public float continentThreshold; // Elevation below this is ocean
