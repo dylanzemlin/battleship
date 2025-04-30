@@ -13,6 +13,8 @@ public class clickToFireCannon : BaseWeaponClick
     {
         if (loadedAmmo != null) // Only fire if there is ammo loaded
         {
+            GameObject ship = this.transform.parent.gameObject.transform.parent.gameObject;
+
             Debug.Log("Cannon fired using loaded ammo!");
 
             // Detach ammo from the cannon to let it move independently
@@ -35,7 +37,7 @@ public class clickToFireCannon : BaseWeaponClick
             Vector3 fireDir = fireDirectionTransform != null ? fireDirectionTransform.forward : transform.forward;
 
             // Actually launch the ammo
-            loadedAmmo.Fire(fireDir, launchSpeed, gameObject);
+            loadedAmmo.Fire(fireDir, launchSpeed, ship);
 
             // Clear the loaded ammo so the cannon is now empty and ready to reload
             loadedAmmo = null;

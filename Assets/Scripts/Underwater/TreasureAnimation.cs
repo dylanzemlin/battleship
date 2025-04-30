@@ -15,29 +15,30 @@ public class TreasureAnimation : MonoBehaviour
 
     void Update() {}
 
-    //  1 of 50 percent chance to find treasure
+    //  1 of 10 percent chance to find treasure
     // Sets treasure chest on ship as active and has a treasure chest animation
     public void searchForTreasure(GameObject ship, Vector3 ammoTransform, Vector3 planetNormal, Vector3 planetCenter) {
-        // if (Random.Range(0,50) == 1 && firingWeapon != null) {
         if (ship == null) {
             Debug.LogWarning("Could not access Ship");
         } else {
-            Transform treasureChest = ship.transform.Find("TresureChest");
-            if (treasureChest == null) {
-                Debug.LogWarning("Could not ships TresureChest. Ship's name: " + ship.name);
-            } else {
-                // Set treasure Chest on ship active
-                treasureChest.gameObject.SetActive(true);
-                // === ANIMATE CHEST ===
-                // Instantiate treasure chest
-                GameObject treasureInstance = Instantiate(treasureChestPrefab, ammoTransform, Quaternion.identity);
-                if (treasureChestPrefab == null) {
-                    Debug.LogWarning("Could not instantiate the treasureChestPrefab from GameController.Instance");
+            if (Random.Range(0,10) == 1) {
+                Transform treasureChest = ship.transform.Find("TresureChest");
+                if (treasureChest == null) {
+                    Debug.LogWarning("Could not ships TresureChest. Ship's name: " + ship.name);
                 } else {
-                    // set the direction of the particle system to the planet normal
-                    treasureInstance.transform.forward = planetNormal;
-                    // start coroutine
-                    StartCoroutine(RiseOfTheTreasure(treasureInstance, planetCenter));
+                    // Set treasure Chest on ship active
+                    treasureChest.gameObject.SetActive(true);
+                    // === ANIMATE CHEST ===
+                    // Instantiate treasure chest
+                    GameObject treasureInstance = Instantiate(treasureChestPrefab, ammoTransform, Quaternion.identity);
+                    if (treasureChestPrefab == null) {
+                        Debug.LogWarning("Could not instantiate the treasureChestPrefab from GameController.Instance");
+                    } else {
+                        // set the direction of the particle system to the planet normal
+                        treasureInstance.transform.forward = planetNormal;
+                        // start coroutine
+                        StartCoroutine(RiseOfTheTreasure(treasureInstance, planetCenter));
+                    }
                 }
             }
         }
