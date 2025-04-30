@@ -22,6 +22,8 @@ public class Planet : MonoBehaviour
         Regenerate();
     }
 
+    // I can't recall the stackoverflow post used for this, but normals on a sphere
+    // are hard and I am unsure the best way to do it :/
     public static Vector3[] CalculateNormals(Vector3[] vertices, int[] triangles)
     {
         Vector3[] normals = new Vector3[vertices.Length];

@@ -54,9 +54,7 @@ public class TerrainGeneration
 
         float elevation = total / maxValue;
 
-        // Optional tweak to emphasize continents (threshold)
         elevation = Mathf.Clamp01(elevation - options.continentThreshold);
-
         return elevation;
     }
 
