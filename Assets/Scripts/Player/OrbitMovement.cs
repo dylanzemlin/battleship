@@ -40,9 +40,10 @@ public class CameraMovement : MonoBehaviour{
     void Update() {
         // get distance from target
         Vector3 direction = (target.position - transform.position).normalized;
+        bool isZRoll = false;
         
         if (Input.GetMouseButton(1)) {
-            RightClickRotate();
+            isZRoll = RightClickRotate();
         }
 
         if (Input.GetKey (KeyCode.LeftShift)){ // Move in strict coordinates
@@ -56,8 +57,10 @@ public class CameraMovement : MonoBehaviour{
                 transform.RotateAround(target.position, v, speed * Time.deltaTime);
             }
         }
-
-        Zoom();
+        
+        if (!isZRoll){
+            Zoom();
+        }
     }
 
     private Vector3 planeMovement() { //returns the basic values, if it's 0 than it's not active.
@@ -110,7 +113,8 @@ public class CameraMovement : MonoBehaviour{
         }
     }
 
-    private void RightClickRotate() {
+    // return true if scroll wheel is used, false otherwise
+    private bool RightClickRotate() {
         float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
@@ -129,5 +133,6 @@ public class CameraMovement : MonoBehaviour{
         // transform.RotateAround(target.position, axis, mouseX);
         // Vector3 right = transform.right;
         // transform.RotateAround(transform.position, -right, -mouseY);
+        return scrollZ == 0 ? false : true;
     }
 }
