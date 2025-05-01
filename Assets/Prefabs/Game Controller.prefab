@@ -9792,7 +9792,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7032686859967575044}
   - component: {fileID: 5757898015058037769}
-  - component: {fileID: 6430559624883874911}
   - component: {fileID: 2557583126303764216}
   m_Layer: 0
   m_Name: Game Controller
@@ -9836,23 +9835,8 @@ MonoBehaviour:
   selectedShip: {fileID: 0}
   waterSplash: {fileID: 6403076040150490543}
   smokeBurst: {fileID: 7984085187099840089}
+  fishScatterParticlePrefab: {fileID: 0}
   explosionController: {fileID: 1060368176437582693}
---- !u!114 &6430559624883874911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2286994958727460309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aab2a1a9ac5d7154498682e0ed59f83b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  fbxPrefab: {fileID: 919132149155446097, guid: c70635ece37f6f045931a490ad92ade5, type: 3}
-  speed: 1
-  radius: 5
 --- !u!114 &2557583126303764216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9868,6 +9852,10 @@ MonoBehaviour:
   target: {fileID: 0}
   fbxPrefab: {fileID: 919132149155446097, guid: 254b96305f82ea14e961647c80badd6c, type: 3}
   speed: 10
+  rotationSphere: {x: -1, y: 0, z: 0}
+  rotationSphere_speed: 1
+  rotationTorus: {x: 0, y: 0, z: 1}
+  rotationTorus_speed: 1
 --- !u!1 &4683731281674060773
 GameObject:
   m_ObjectHideFlags: 0
