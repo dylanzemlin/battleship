@@ -15,13 +15,13 @@ public class TreasureAnimation : MonoBehaviour
 
     void Update() {}
 
-    //  1 of 10 percent chance to find treasure
+    //  1 of 3 percent chance to find treasure
     // Sets treasure chest on ship as active and has a treasure chest animation
     public void searchForTreasure(GameObject ship, Vector3 ammoTransform, Vector3 planetNormal, Vector3 planetCenter) {
         if (ship == null) {
             Debug.LogWarning("Could not access Ship");
         } else {
-            if (Random.Range(0,10) == 1) {
+            if (Random.Range(0,3) == 1) {
                 Transform treasureChest = ship.transform.Find("TresureChest");
                 if (treasureChest == null) {
                     Debug.LogWarning("Could not ships TresureChest. Ship's name: " + ship.name);
