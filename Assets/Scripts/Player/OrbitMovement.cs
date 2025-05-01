@@ -114,10 +114,20 @@ public class CameraMovement : MonoBehaviour{
         float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
-        Vector3 axis = (target.position - transform.position).normalized;
-        transform.RotateAround(target.position, axis, mouseX);
+        // SHIFT + SCROLL + RIGHT CLICK TO CHANGE Z ROLL
+        // RIGHT CLICK MOVE MOUSE TO CHANGE MOUSE POSITON
+        float scrollZ = 0f;
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+            scrollZ = Input.GetAxis("Mouse ScrollWheel") * rotationSpeed; // Roll based on mouse scroll while holding Shift
+        }
+        Vector3 currentRotation = transform.eulerAngles;
+        Quaternion rotation = Quaternion.Euler(-mouseY, mouseX, scrollZ);
+        transform.rotation *= rotation;
 
-        Vector3 right = transform.right;
-        transform.RotateAround(transform.position, right, -mouseY);
+        // OLD MOUSE MOVEMENT - RIGHT CLICK ROTATES CAMERA AROUND EARTH
+        // Vector3 axis = (target.position - transform.position).normalized;
+        // transform.RotateAround(target.position, axis, mouseX);
+        // Vector3 right = transform.right;
+        // transform.RotateAround(transform.position, -right, -mouseY);
     }
 }
